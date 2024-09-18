@@ -6,7 +6,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # Cargar configuración del peer
-with open('../config/peer2_config.json', 'r') as config_file:
+with open('./peer1_config.json', 'r') as config_file:
     config = json.load(config_file)
 
 # Listar archivos en el directorio configurado
@@ -21,7 +21,7 @@ def register_with_directory():
         "peer_ip": f"http://{config['ip']}:{config['port']}",
         "files": list_files()
     }
-    response = requests.post(f"http://localhost:5000/login", json=peer_data)
+    response = requests.post(f"http://localhost:3000/login", json=peer_data)
     print("Registro del peer:", response.json())
 
 @app.route('/get_files', methods=['GET'])

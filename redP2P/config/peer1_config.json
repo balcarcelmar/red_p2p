@@ -1,9 +1,0 @@
-{
-    "peer_id": "peer1",
-    "ip": "localhost",
-    "port": 5000,
-    "directory": "../files/peer1",
-    "peer_titular": "http://localhost:5000",
-    "peer_suplente": "http://localhost:5001"
-  }
-  
