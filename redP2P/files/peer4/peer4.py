@@ -21,7 +21,7 @@ def register_with_directory():
         "peer_ip": f"http://{config['ip']}:{config['port']}",
         "files": list_files()
     }
-    response = requests.post(f"http://localhost:3000/login", json=peer_data)
+    response = requests.post(config['peer_titular'], json=peer_data)
     print("Registro del peer:", response.json())
 
 @app.route('/get_files', methods=['GET'])
@@ -40,4 +40,3 @@ def upload_file():
 
 if __name__ == '__main__':
     register_with_directory()
-    app.run(host=config['ip'], port=config['port'])
