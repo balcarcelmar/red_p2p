@@ -10,7 +10,6 @@ def run():
     with grpc.insecure_channel('localhost:5000') as channel:
         stub = file_transfer_pb2_grpc.FileTransferStub(channel)
         
-        # Llamada al método 'suma' del servidor
         print("Realizando la descarga..")
         UploadFile_request =file_transfer_pb2.FileRequest(file_name='archivo1.txt',file_content=bytes())
         uploadFile_response = stub.DownloadFile(UploadFile_request)

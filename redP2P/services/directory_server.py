@@ -31,6 +31,38 @@ def login():
 # Devolver una respuesta de éxito
     return jsonify(response_data), 200
 
+
+#Actualización del índice
+@app.route('/enviarindice', methods=['POST'])
+
+def update_index():
+    data = request.json
+    peer_id = data['peer_id']
+    files = data['files']
+
+    # Verificar si el peer está registrado
+    if peer_id in peers:
+        # Actualizar el índice de archivos del peer
+        peers[peer_id]['files'] = files
+        response_data = {
+            "message": f"Índice de {peer_id} actualizado con éxito",
+            "peers": peers
+        }
+    else:
+        # Si el peer no está registrado, devolver un error
+        response_data = {
+            "message": f"Error: {peer_id} no está registrado"
+        }
+        return jsonify(response_data), 400
+
+    # Imprimir en consola para verificar
+    print(f"Actualización del índice del peer {peer_id}:")
+    print(json.dumps(response_data, indent=4))
+
+    return jsonify(response_data), 200
+
+
+
 @app.route('/get_peers', methods=['GET'])
 def get_peers():
     return jsonify(peers), 200
