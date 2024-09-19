@@ -21,9 +21,11 @@ def register_with_directory():
         "peer_ip": f"http://{config['ip']}:{config['port']}",
         "files": list_files()
     }
-    response = requests.post(config['peer_titular'], json=peer_data)
-    print("Registro del peer:", response.json())
-
+    try :
+        response = requests.post(config['peer_titular']+'/login', json=peer_data)
+        print(response.json['message'])
+    except requests.exceptions.RequestException as e:
+        print(f"Error al registrar el peer en el peer titular {config['peer_titular']}: {e}")
 
 # Actualizar el índice de archivos en el servidor de directorio
 def update_index():
@@ -33,31 +35,25 @@ def update_index():
     }
     try:
         response = requests.post(config['peer_titular'] + '/enviarindice', json=peer_data)
-        print("Actualización del índice del peer:", response.json())
+        print( response.json()['message'])
     except requests.exceptions.RequestException as e:
         print(f"Error al actualizar el índice en el peer titular {config['peer_titular']}: {e}")
 
+# Función para buscar un archivo en el servidor de directorio
+def search_file_in_directory(file_name):
+    data = {"file_name": file_name}
+    try:
+        response = requests.post(config['peer_titular'] + '/buscararchivo', json=data)
+        print(response.json()['message'])
+        print(json.dumps(response.json()['peers'], indent=4))
+    except requests.exceptions.RequestException as e:
+        print(f"Error al actualizar el índice en el peer titular {config['peer_titular']}: {e}")
 
 @app.route('/get_files', methods=['GET'])
 def get_files():
     files = list_files()
     return jsonify({"files": files}), 200
 
-# Subir un archivo y actualizar el índice en el servidor de directorio
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    data = request.json
-    file_name = data['file_name']
-    file_content = data['file_content']
-    
-    # Guardar el archivo en el directorio del peer
-    with open(os.path.join(config['directory'], file_name), 'wb') as f:
-        f.write(file_content.encode())  # Asume que el contenido del archivo es un string
-    
-    # Actualizar el índice de archivos en el servidor de directorio o con otro peer
-    update_index()
-    
-    return jsonify({"message": "Archivo subido y índice actualizado con éxito"}), 200
 
 if __name__ == '__main__':
     register_with_directory()

@@ -6,7 +6,7 @@ import file_transfer_pb2
 import file_transfer_pb2_grpc
 import json
 
-with open('./peer2_config.json', 'r') as config_file:
+with open('./peer3_config.json', 'r') as config_file:
     config = json.load(config_file)
 
 # Implementar el servicio gRPC

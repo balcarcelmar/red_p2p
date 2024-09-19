@@ -6,7 +6,6 @@ app = Flask(__name__)
 peers = {}  # Diccionario para almacenar los peers y sus archivos
 
 @app.route('/login', methods=['POST'])
-
 # Obtener los datos de la solicitud (enviados como JSON por el peer)
 def login():
 
@@ -22,11 +21,11 @@ def login():
         }
 #respuesta a mostrar
     response_data = {
-        "peers": peers
+        "message": f"{peer_id} registrado correctamente en el servidor directorio"
     }
 #imprimir en consola
-    print("Respuesta que se enviará al cliente:")
-    print(json.dumps(response_data, indent=4)) 
+    print(f"{peer_id} registrado correctamente")
+    print(peers)
 
 # Devolver una respuesta de éxito
     return jsonify(response_data), 200
@@ -46,26 +45,46 @@ def update_index():
         peers[peer_id]['files'] = files
         response_data = {
             "message": f"Índice de {peer_id} actualizado con éxito",
-            "peers": peers
         }
+        # Imprimir en consola para verificar
+        print(f"Actualización del índice del peer {peer_id}:")
+        print(peers[peer_id])
     else:
         # Si el peer no está registrado, devolver un error
         response_data = {
             "message": f"Error: {peer_id} no está registrado"
         }
         return jsonify(response_data), 400
-
-    # Imprimir en consola para verificar
-    print(f"Actualización del índice del peer {peer_id}:")
-    print(json.dumps(response_data, indent=4))
+   
 
     return jsonify(response_data), 200
-
 
 
 @app.route('/get_peers', methods=['GET'])
 def get_peers():
     return jsonify(peers), 200
+
+# Ruta para buscar un archivo en la red de peers
+@app.route('/buscararchivo', methods=['POST'])
+def search_file():
+    data = request.json
+    file_name = data.get('file_name')
+
+    # Lista para almacenar los peers que tienen el archivo
+    peers_with_file = []
+
+    # Buscar en todos los peers si tienen el archivo
+    for peer_id, peer_info in peers.items():
+        if file_name in peer_info['files']:
+            peers_with_file.append({
+                'peer_id': peer_id,
+                'peer_ip': peer_info['ip']
+            })
+
+    if len(peers_with_file):
+        return jsonify({"message": "Archivo encontrado en los siguientes peers:", "peers": peers_with_file}), 200
+    else:
+        return jsonify({"message": "Archivo no encontrado"}), 404
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=3000)
