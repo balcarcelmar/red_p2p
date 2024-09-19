@@ -11,9 +11,9 @@ with open('./peer3_config.json', 'r') as config_file:
     config = json.load(config_file)
 
 #funcion de descarga de archivo
-def download(fileName):
+def download(fileName,ip, port):
     # Establecer la conexión con el servidor gRPC
-    with grpc.insecure_channel(f'{config['ip']}:{config['port']}') as channel:
+    with grpc.insecure_channel(f'{ip}:{port}') as channel:
         stub = file_transfer_pb2_grpc.FileTransferStub(channel)
         
         # Llamada al método 'download' del servidor
@@ -28,24 +28,3 @@ def download(fileName):
         print(DownloadFile_response.status)
     return 
 
-#función de carga de archivos
-def upload(fileName):
-    file_path = os.path.join(config['directory'], fileName)
-    if os.path.exists(file_path):
-        with open(file_path, 'rb') as f:
-            content = f.read()
-    else:
-        print('Archivo no encontrado')
-        return 
- 
-    # Establecer la conexión con el servidor gRPC
-    with grpc.insecure_channel(f'{config['ip']}:{config['port']}') as channel:
-        stub = file_transfer_pb2_grpc.FileTransferStub(channel)
-        
-        #llamada al método de 'upload' del servidor
-        print('Realizando la carga ..')
-        UploadFile_request = file_transfer_pb2.FileRequest(file_name = fileName, file_content= content)
-        UploadFile_response = stub.UploadFile(UploadFile_request)
-
-        print(UploadFile_response.status)
-    return 

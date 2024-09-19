@@ -30,6 +30,25 @@ def login():
 # Devolver una respuesta de éxito
     return jsonify(response_data), 200
 
+@app.route('/logout', methods=['POST'])
+def logout():
+    data = request.json 
+    peer_id = data['peer_id'] 
+    if peer_id in peers:
+        peers.pop(peer_id)
+        print(peers)
+        response_data = {
+            "message": f"{peer_id} eliminado con exito",
+        }
+        print(peers)
+        return jsonify(response_data),200
+    else :
+        response_data = {
+            "message": f"Error: {peer_id} no está registrado"
+        }
+        return jsonify(response_data), 400
+
+
 
 #Actualización del índice
 @app.route('/enviarindice', methods=['POST'])
