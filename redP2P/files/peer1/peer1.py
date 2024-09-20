@@ -21,7 +21,7 @@ def register_with_directory():
         "peer_ip": f"http://{config['ip']}:{config['port']}",
         "files": list_files()
     }
-    response = requests.post(config['peer_titular'], json=peer_data)
+    response = requests.post(config['peer_titular'] + '/login', json=peer_data)
     print("Registro del peer:", response.json())
 
 

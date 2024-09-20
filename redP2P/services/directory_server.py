@@ -6,7 +6,6 @@ app = Flask(__name__)
 peers = {}  # Diccionario para almacenar los peers y sus archivos
 
 @app.route('/login', methods=['POST'])
-
 # Obtener los datos de la solicitud (enviados como JSON por el peer)
 def login():
 
@@ -34,7 +33,6 @@ def login():
 
 #Actualización del índice
 @app.route('/enviarindice', methods=['POST'])
-
 def update_index():
     data = request.json
     peer_id = data['peer_id']
