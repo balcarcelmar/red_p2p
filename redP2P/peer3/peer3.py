@@ -59,6 +59,7 @@ def search_file_in_directory(file_name):
         print(f"Error al buscar el archivo en el servidor directorio {config['peer_titular']}: {e}")
     return response.json()['peers']
 
+#Función para obtener el indice de archivos del sistema
 def get_index():
     try:
         response = requests.get(config['peer_titular'] + '/get_peers')

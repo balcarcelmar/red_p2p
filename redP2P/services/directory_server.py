@@ -103,7 +103,7 @@ def search_file():
     if len(peers_with_file):
         return jsonify({"message": "Archivo encontrado en los siguientes peers:", "peers": peers_with_file}), 200
     else:
-        return jsonify({"message": "Archivo no encontrado"}), 404
+        return jsonify({"message": "Archivo no encontrado","peers":peers_with_file}), 404
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=3000)
