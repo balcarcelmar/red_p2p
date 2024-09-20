@@ -11,11 +11,11 @@ with open('./peer3_config.json', 'r') as config_file:
     config = json.load(config_file)
 
 #funcion de descarga de archivo
-def download(fileName,ip, port):
+def download(fileName,ip):
     # Establecer la conexión con el servidor gRPC
-    with grpc.insecure_channel(f'{ip}:{port}') as channel:
+    with grpc.insecure_channel(ip) as channel:
         stub = file_transfer_pb2_grpc.FileTransferStub(channel)
-        
+
         # Llamada al método 'download' del servidor
         print("Realizando la descarga..")
         DownloadFile_request =file_transfer_pb2.FileRequest(file_name=fileName)
@@ -27,4 +27,3 @@ def download(fileName,ip, port):
 
         print(DownloadFile_response.status)
     return 
-
