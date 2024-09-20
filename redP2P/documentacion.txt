@@ -1,4 +1,4 @@
 //El Peer1 va a actuar como servidor de directorio y localización.
 //El Peer2 será el suplente.
 
-El login lo debe hacer el servidor o desde el 
+El login lo debe hacer el peer ante el servidor directorio

@@ -6,7 +6,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # Cargar configuración del peer
-with open('./peer4_config.json', 'r') as config_file:
+with open('./peer3_config.json', 'r') as config_file:
     config = json.load(config_file)
 
 # Listar archivos en el directorio configurado
@@ -18,12 +18,12 @@ def list_files():
 def login():
     peer_data = {
         "peer_id": config['peer_id'],
-        "peer_ip": f"http://{config['ip']}:{config['port']}",
+        "peer_ip": f"{config['ip']}:{config['port']}",
         "files": list_files()
     }
     try :
         response = requests.post(config['peer_titular']+'/login', json=peer_data)
-        print(response.json['message'])
+        print(response.json()['message'])
     except requests.exceptions.RequestException as e:
         print(f"Error al registrar el peer en el servidor directorio {config['peer_titular']}: {e}")
 
@@ -57,10 +57,11 @@ def search_file_in_directory(file_name):
         print(json.dumps(response.json()['peers'], indent=4))
     except requests.exceptions.RequestException as e:
         print(f"Error al buscar el archivo en el servidor directorio {config['peer_titular']}: {e}")
+    return response.json()['peers']
 
 def get_index():
     try:
-        response = requests.post(config['peer_titular'] + '/get_peers')
+        response = requests.get(config['peer_titular'] + '/get_peers')
         print("peers disponibles:")
         print(json.dumps(response.json(), indent=4))
     except requests.exceptions.RequestException as e:

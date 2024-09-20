@@ -2,7 +2,7 @@
     "peer_id": "peer2",
     "ip": "localhost",
     "port": 5001,
-    "directory": "./",
+    "directory": "./files/",
     "peer_titular": "http://localhost:3000",
     "peer_suplente": "http://localhost:3001"
   }

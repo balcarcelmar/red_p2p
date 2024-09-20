@@ -1,8 +1,8 @@
 {
-    "peer_id": "peer4",
+    "peer_id": "peer3",
     "ip": "localhost",
-    "port": 5003,
-    "directory": "./",
+    "port": 5002,
+    "directory": "./files/",
     "peer_titular": "http://localhost:3000",
     "peer_suplente": "http://localhost:3001"
   }
