@@ -10,11 +10,10 @@ WORKDIR /redp2p
 COPY . .
 
 # Instalar las dependencias necesarias
-RUN pip install --no-cache-dir Flask==2.0.1 grpcio-tools>=1.54.0 protobuf==5.27.2 requests werkzeug==2.0.3
-RUN chmod -R 777 ./files
+RUN pip install --no-cache-dir Flask==2.0.1 werkzeug==2.0.3
 
 # Exponer el puerto que este peer va a utilizar
-EXPOSE 5002
+EXPOSE 3000
 
 # Comando para iniciar el peer
-CMD ["python", "file_transfer_service.py"]
+CMD ["python", "directory_server.py"]

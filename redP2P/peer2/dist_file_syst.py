@@ -18,7 +18,6 @@ def menu():
 if __name__ == '__main__':
     #registro en el servidor directorio
     #inicialización del servidor grpc para la transferencia de archivos
-
     print("bienvenido al sistema de archivos distribuido ")
     while True:
         menu()
@@ -42,10 +41,9 @@ if __name__ == '__main__':
                 print("No se pudo realizar la descarga.")
         elif opcion == 5:
             print("ha salido del sistema de archivos distribuido")
-
+            break
         else :
             "ingresa una opción correcta"
-            break
 
 
 
