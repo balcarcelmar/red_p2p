@@ -105,4 +105,4 @@ def search_file():
         return jsonify({"message": "Archivo no encontrado","peers":peers_with_file}), 404
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=3000)
+    app.run(host='172.20.0.2', port=3000)

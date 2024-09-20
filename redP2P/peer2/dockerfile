@@ -1,0 +1,19 @@
+# Dockerfile for peer1
+
+# Usar una imagen base de Python
+FROM python:3.9
+
+# Establecer el directorio de trabajo dentro del contenedor
+WORKDIR /redp2p
+
+# Copiar los archivos del peer al contenedor
+COPY . .
+
+# Instalar las dependencias necesarias
+RUN pip install --no-cache-dir Flask==2.0.1 grpcio==1.42.0 grpcio-tools==1.42.0
+
+# Exponer el puerto que este peer va a utilizar
+EXPOSE 5001
+
+# Comando para iniciar el peer
+CMD ["python", "file_transfer_service.py"]

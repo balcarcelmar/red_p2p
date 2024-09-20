@@ -1,0 +1,53 @@
+version: '3'
+services:
+  directory_server:
+    build:
+      context: ./services
+    ports:
+      - "3000:3000"
+    networks:
+      p2p_network:
+        ipv4_address: 172.20.0.2
+
+  peer1:
+    build:
+      context: ./peer1
+    ports:
+      - "5000:5000"
+    networks:
+      p2p_network:
+        ipv4_address: 172.20.0.3
+
+  peer2:
+    build:
+      context: ./peer2
+    ports:
+      - "5001:5001"
+    networks:
+      p2p_network:
+        ipv4_address: 172.20.0.4
+
+  peer3:
+    build:
+      context: ./peer3
+    ports:
+      - "5002:5002"
+    networks:
+      p2p_network:
+        ipv4_address: 172.20.0.5
+
+  peer4:
+    build:
+      context: ./peer4
+    ports:
+      - "5003:5003"
+    networks:
+      p2p_network:
+        ipv4_address: 172.20.0.6
+
+networks:
+  p2p_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
