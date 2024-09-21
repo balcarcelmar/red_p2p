@@ -1,3 +1,4 @@
+# programa que contiene las funciones que se comunican con el servidor directorio ( peer titular ) por medio de http
 import os
 import json
 import requests

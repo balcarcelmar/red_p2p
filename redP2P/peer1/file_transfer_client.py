@@ -1,3 +1,5 @@
+# programa que contiene la función que ejecuta la descarga de un servidor grpc
+# se le pasan como parámetros la ip del servidor grpc y el nombre del archivo a descargar
 import grpc
 from concurrent import futures
 import time
